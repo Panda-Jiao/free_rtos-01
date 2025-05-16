@@ -1,5 +1,5 @@
 *.hex
 
-free_rtos-01/
+MDK-ARM/free_rtos-01/
 
 *.log
