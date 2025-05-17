@@ -57,6 +57,42 @@ const osThreadAttr_t defaultTask_attributes = {
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
+//用户代码，函数原型从这里开始写
+void MyTask(void *argument)
+{
+    while(1)
+    {
+        //HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_5);
+        osDelay(100);
+    }
+
+}
+
+void Led_Task(void *argument)
+{
+    while(1)
+    {
+        HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_5);
+        osDelay(200);
+    }
+}
+
+void KeyTask(void *argument)
+{
+    while(1)
+    {
+        osDelay(10);
+    }
+}
+
+void Led_Task2(void *argument)
+{
+    while(1)
+    {
+        osDelay(10);
+    }
+}
+
 
 /* USER CODE END FunctionPrototypes */
 
@@ -96,6 +132,13 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+//添加自己的线程
+//参数1：任务执行的原型函数名, 参数2:随便起个名字,也可以是简单说明,参数3：任务堆栈大小,参数4：函数参数，参数5：优先级,参数6:null
+  xTaskCreate(MyTask,"myfirsttask",128,NULL,1,NULL);
+  xTaskCreate(Led_Task,"mysecondtask",128,NULL,1,NULL);
+  xTaskCreate(KeyTask,"keyfunction",128,NULL,1,NULL);
+  xTaskCreate(Led_Task2,"led2function",128,NULL,1,NULL);
+  
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -118,7 +161,7 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
     osDelay(500);
-    HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_5);   
+  //HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_5);   
   }
   /* USER CODE END StartDefaultTask */
 }
